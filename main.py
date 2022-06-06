@@ -88,9 +88,14 @@ def main(screen):
     curses.init_pair(3, curses.COLOR_WHITE, curses.COLOR_RED)
 
     start_screen(screen)
-    byeLine = wpm_test(screen)
+    while True:
+        byeLine = wpm_test(screen)
 
-    screen.addstr(byeLine, 0, "You completed the text! Press any key to continue or ESC to end...")
-    screen.getkey()
+        screen.addstr(byeLine, 0, "You completed the text! Press any key to continue or ESC to end...")
+        key = screen.getkey()
+
+        # Break if ESC key was pressed:
+        if ord(key) == 27:
+            break
 
 wrapper(main)
