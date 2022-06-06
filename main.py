@@ -41,6 +41,7 @@ def wpm_test(screen):
     """
     with open("quotes.json") as q:
         author, quote = random.choice(json.load(q)["quotes"]).values()
+    quote = quote.strip() # Remove whitespace at end of quotes
     current_txt = []
     wpm = 0
     start_time = time.time()
@@ -87,7 +88,7 @@ def main(screen):
     start_screen(screen)
     byeLine = wpm_test(screen)
 
-    screen.addstr(byeLine, 0, "You completed the text! Press any key to continue...")
+    screen.addstr(byeLine, 0, "You completed the text! Press any key to continue or ESC to end...")
     screen.getkey()
 
 wrapper(main)
