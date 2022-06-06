@@ -20,7 +20,14 @@ def display_txt(screen, quote, current_txt, wpm=0):
     screen.addstr(quote)
 
     for i,char in enumerate(current_txt):
-        screen.addstr(0, i, char, curses.color_pair(1))
+        correct_char = quote[i]
+
+        # Select text color based on correctness:
+        color = curses.color_pair(1)
+        if char != correct_char:
+            color = curses.color_pair(2)
+
+        screen.addstr(0, i, char, color)
 
 def wpm_test(screen):
     """
