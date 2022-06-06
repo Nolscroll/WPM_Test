@@ -51,7 +51,7 @@ def wpm_test(screen):
         if key in ("KEY_BACKSPACE", "\b", "\x7f"): # Handles backspace
             if len(current_txt) > 0:
                 current_txt.pop()
-        else:
+        elif len(current_txt) < len(quote): # Handles current_txt exceeding quote
             current_txt.append(key)
 
 def main(screen):
