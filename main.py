@@ -13,6 +13,15 @@ def start_screen(screen):
     screen.refresh()
     screen.getkey()
 
+def display_txt(screen, quote, current_txt, wpm=0):
+    """
+    Displays quote and typed text to the terminal screen
+    """
+    screen.addstr(quote)
+
+    for i,char in enumerate(current_txt):
+        screen.addstr(0, i, char, curses.color_pair(1))
+
 def wpm_test(screen):
     """
     The WPM test itself
@@ -23,11 +32,7 @@ def wpm_test(screen):
 
     while True:
         screen.clear()
-        screen.addstr(quote)
-
-        for char in current_txt:
-            screen.addstr(char, curses.color_pair(1))
-
+        display_txt(screen, quote, current_txt)
         screen.refresh()
 
         key = screen.getkey()
