@@ -2,6 +2,7 @@ import random
 import json
 import curses
 import time
+from math import ceil
 from curses import wrapper
 
 def start_screen(screen):
@@ -14,12 +15,13 @@ def start_screen(screen):
     screen.refresh()
     screen.getkey()
 
-def display_txt(screen, quote, current_txt, wpm=0):
+def display_txt(screen, quote, author, current_txt, wpm=0):
     """
     Displays quote and typed text to the terminal screen
     """
     screen.addstr(quote)
     screen.addstr(f"\nWPM: {wpm}")
+    screen.addstr(f"\nAuthor: {author}")
 
     for i,char in enumerate(current_txt):
         correct_char = quote[i]
@@ -28,8 +30,10 @@ def display_txt(screen, quote, current_txt, wpm=0):
         color = curses.color_pair(1)
         if char != correct_char:
             color = curses.color_pair(2)
-
-        screen.addstr(0, i, char, color)
+        try:
+            screen.addstr(0, i, char, color)
+        except:
+            pass # attempt at fixing error after many keypresses
 
 def wpm_test(screen):
     """
@@ -47,7 +51,7 @@ def wpm_test(screen):
         wpm = round(len(current_txt) / (time_elapsed /60)) / 5
 
         screen.clear()
-        display_txt(screen, quote, current_txt, wpm)
+        display_txt(screen, quote, author, current_txt, wpm)
         screen.refresh()
 
         if "".join(current_txt) == quote: # join() transforms current_txt list into a string
@@ -69,7 +73,8 @@ def wpm_test(screen):
                 current_txt.pop()
         elif len(current_txt) < len(quote): # Handles current_txt exceeding quote
             current_txt.append(key)
-    screen.addstr(1, len(quote)+5, f"Author: {author}")
+        
+    return ceil(len(quote) / 79) + 3
 
 def main(screen):
     """
@@ -80,9 +85,9 @@ def main(screen):
     curses.init_pair(3, curses.COLOR_WHITE, curses.COLOR_BLACK)
 
     start_screen(screen)
-    wpm_test(screen)
+    byeLine = wpm_test(screen)
 
-    screen.addstr(2, 0, "You completed the text! Press any key to continue...")
+    screen.addstr(byeLine, 0, "You completed the text! Press any key to continue...")
     screen.getkey()
 
 wrapper(main)
