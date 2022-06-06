@@ -5,6 +5,8 @@ import time
 from math import ceil
 from curses import wrapper
 
+FILENAME = "singleLineQuotes.json"
+
 def start_screen(screen):
     """
     Initialize the terminal screen with a welcoming message
@@ -41,7 +43,7 @@ def wpm_test(screen):
     """
     The WPM test itself
     """
-    with open("quotes.json") as q:
+    with open(FILENAME) as q:
         author, quote = random.choice(json.load(q)["quotes"]).values()
     quote = quote.strip() # Remove whitespace at end of quotes
     current_txt = []
