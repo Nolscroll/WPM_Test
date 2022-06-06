@@ -12,7 +12,7 @@ def start_screen(screen):
 
 def wpm_test(screen):
     with open("quotes.json") as q:
-        author, quote = random.choice(json.load(open('quotes.json'))["quotes"]).values()
+        author, quote = random.choice(json.load(q)["quotes"]).values()
 
 
 def main(screen):
