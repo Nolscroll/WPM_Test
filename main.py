@@ -30,6 +30,8 @@ def display_txt(screen, quote, author, current_txt, wpm=0):
         color = curses.color_pair(1)
         if char != correct_char:
             color = curses.color_pair(2)
+            if char == " ":
+                color = curses.color_pair(3)
         try:
             screen.addstr(0, i, char, color)
         except:
@@ -83,7 +85,7 @@ def main(screen):
     """
     curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)
     curses.init_pair(2, curses.COLOR_RED, curses.COLOR_BLACK)
-    curses.init_pair(3, curses.COLOR_WHITE, curses.COLOR_BLACK)
+    curses.init_pair(3, curses.COLOR_WHITE, curses.COLOR_RED)
 
     start_screen(screen)
     byeLine = wpm_test(screen)
